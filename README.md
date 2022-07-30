@@ -20,9 +20,9 @@ To return the relevant documents to the query run:
   
 There are two types of ranking functions available to rank documents: tfidf, bm25
 
-## :framed_picture:	Screenshots
+## :framed_picture:	Screenshot
 
-![Project Screenshot](file:///D:/Downloads/Infromation_extraction_sc1.jpg?raw=true "Optional Title")
+![Information_Retrieval - sc1](https://user-images.githubusercontent.com/61319079/181924757-078a8bdd-b658-442d-aad2-d3c42f2889cb.png)
 
 
 ## :man_technologist:	Authors
