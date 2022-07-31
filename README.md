@@ -5,7 +5,7 @@ In this project, information retrieval is applied to build search engine that re
 
 The program builds a search engine in two stages: 
 - Inverted Index built from XML files.
-- The user enters a query, The program returns a list of ranked relevant documents from the Inverted Index (built offline) according to the query.
+- The user enters a query, the program returns a list of ranked relevant documents from the Inverted Index (built offline) according to the query.
 
 
 ## :arrow_right: Deployment
