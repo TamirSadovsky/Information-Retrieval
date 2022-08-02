@@ -14,15 +14,12 @@ import numpy as np
 corpus = {}
 # word : tf-idf score
 dict_tfidf = {}
-# word : bm-25 score
-dict_bm25 = {}
+# scores of tf-idf query
 dict_query = {}
 # record id : the normalized len of document vector
 doc_vec_len = {}
 # file_name : num of words in file after tokenization
 words_num_in_file = {}
-# save tf for bm-25 score
-tf_for_bm25 = {}
 
 ### PART 1: Inverted Index and scores #################################################################
 
@@ -137,7 +134,7 @@ def calculate_tfidf(docs_num):
             dict_tfidf[word][file]["tfidf"] = tf*idf
 
             #Incrementing length of current file by (idf*tf)^2:
-            doc_vec_len[file] = doc_vec_len[file] + (tf*idf*tf*idf)
+            doc_vec_len[file] = doc_vec_len[file] + (tf*idf) ** 2
 
 def save_inverted_index_file():
     """
@@ -187,29 +184,6 @@ def calc_number_of_docs_containing_term(inverted_index, the_query):
             dict_counter_occurrence[word] = counter
             counter = 0
     return dict_counter_occurrence
-
-""""
-def calc_number_of_docs_containing_term(inverted_index, the_query):
-    
-    This function calculates the tf for each word in the query
-    :return @param dict_counter_occurrence = dict holds tf for each word in the query
-    
-    max_to_normalize = 0
-    dict_counter_occurrence = {}
-    counter = 0
-    for word in the_query:
-        if inverted_index.get(word) != None:
-            for i in inverted_index[word]:
-                counter += 1
-            dict_counter_occurrence[word] = counter
-            if counter > max_to_normalize:
-                max_to_normalize = counter
-            counter = 0
-    for tf in dict_counter_occurrence:
-        dict_counter_occurrence[tf] = dict_counter_occurrence[tf] / max_to_normalize
-    print(dict_counter_occurrence)
-    return dict_counter_occurrence
-"""
 
 def calc_idf_dict(query, docs_num, dict_counter_occurrence):
     """
@@ -277,8 +251,8 @@ def calc_bm25(the_query, inverted_index, dict_doc_lengths, docs_num):
     dict_counter_occurrence = calc_number_of_docs_containing_term(inverted_index, the_query)
     dict_idf = calc_idf_dict(the_query, docs_num, dict_counter_occurrence)
 
-    # k in range [1.2,2] - saw in lecture, usually k = 1.2
-    k = 2.2
+    # k in range [1.2,2] - saw in lecture
+    k = 2.432
     # b in range [0,1] - saw in lecture, usually b = 0.75
     b = 0.75
 
@@ -405,14 +379,12 @@ def query():
 
     # clean query
     try:
-        # print(len(sys.argv))
         n = len(sys.argv)
         question = ""
         for i in range(4, n):
             question += sys.argv[i].lower()
             if i != n:
                 question += " "
-        # print(question)
     except:
         print("query question is missing")
         return
@@ -456,5 +428,3 @@ if __name__ == '__main__':
         create_index(sys.argv[2])
     elif mood == "query":
         query()
-
-
